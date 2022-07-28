@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
-
+import { useEffect } from "react";
+import { useRecepisContext } from "../hooks/useRecepisContext";
 //components
 import RecepiDetails from "../components/RecepiDetails";
+import RecepiForm from "../components/RecepiForm";
+
 
 const Home = ()  => {
 
-    const [recepis, setRecepis] =useState(null)
+    const { recepis, dispatch } = useRecepisContext()
 
     useEffect(() => {
         const fetchRecepis = async () => {
@@ -13,11 +15,11 @@ const Home = ()  => {
             const json =await response.json()
 
             if (response.ok){
-                setRecepis(json)
+                dispatch({type: 'SET_RECEPIS', payload: json})
             }
         }
         fetchRecepis()
-    }, [])
+    }, [dispatch])
 
     return (
         <div className="home">
@@ -26,6 +28,7 @@ const Home = ()  => {
                     <RecepiDetails key={recepi._id} recepi={recepi}/>
                 ))}
             </div>
+            <RecepiForm/>
         </div>
     )
 }
