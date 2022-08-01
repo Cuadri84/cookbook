@@ -29,6 +29,22 @@ const getRecepi = async (req, res) => {
 const createRecepi = async (req,res)=>{
     const {title, ingredients, rece} =req.body
 
+    let emptyFields = []
+
+    if (!title) {
+        emptyFields.push('title')
+    }
+    if (!ingredients) {
+        emptyFields.push('ingredients')
+    }
+    if (!rece) {
+        emptyFields.push('rece')
+    }
+    if (emptyFields.length > 0) {
+        return res.status(400).json({ error: 'Please fill in all fields', emptyFields })
+    }
+
+    // add to the database
     try{
         const recepi = await Recepi.create({title, ingredients, rece})
         res.status(200).json(recepi)

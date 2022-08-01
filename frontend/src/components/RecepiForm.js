@@ -8,6 +8,7 @@ const RecepiForm = () => {
     const [ingredients, setIngredients] = useState('')
     const [rece, setRece] = useState('')
     const [error, setError] = useState(null)
+    const [emptyFields, setEmptyFields] = useState([])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -25,13 +26,14 @@ const RecepiForm = () => {
 
         if(!response.ok) {
             setError(json.error)
+            setEmptyFields(json.emptyFields)
         }
         if(response.ok) {
+            setEmptyFields([])
+            setError(null)
             setTitle('')
             setIngredients('')
             setRece('')
-            setError(null)
-            console.log('new recepi added',json)
             dispatch({type: 'CREATE_RECEPI', payload: json})
         }
     }
@@ -45,6 +47,7 @@ const RecepiForm = () => {
                 type="text"
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
+                className={emptyFields.includes('title') ? 'error' : ''}
             />
 
             <label>Ingredients: </label>
@@ -52,6 +55,7 @@ const RecepiForm = () => {
                 type="text"
                 onChange={(e) => setIngredients(e.target.value)}
                 value={ingredients}
+                className={emptyFields.includes('ingredients') ? 'error' : ''}
             />
 
             <label>Recepi: </label>
@@ -59,6 +63,7 @@ const RecepiForm = () => {
                 type="text"
                 onChange={(e) => setRece(e.target.value)}
                 value={rece}
+                className={emptyFields.includes('rece') ? 'error' : ''}
             />
 
             <button>Add recepi</button>

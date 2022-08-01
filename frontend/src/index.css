@@ -5,7 +5,7 @@
 /* layout */
 :root {
   --primary: #bc7b7c;
-  --error: #8c002c;
+  --error: #c9124c;
 }
 body {
   background: #f3f3f3;
@@ -102,4 +102,7 @@ div.error {
   color: var(--error);
   border-radius: 4px;
   margin: 20px 0;
+}
+input.error{
+  border: 1px solid var(--error);
 }

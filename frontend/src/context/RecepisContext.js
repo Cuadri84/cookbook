@@ -12,6 +12,10 @@ export const recepisReducer = (state, action) => {
         return {
           recepis: [action.payload, ...state.recepis]
         }
+      case 'DELETE_RECEPI':
+          return {
+            recepis: state.recepis.filter(w => w._id !== action.payload._id)
+          }
       default:
         return state
     }
